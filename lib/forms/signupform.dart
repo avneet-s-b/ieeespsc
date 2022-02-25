@@ -37,7 +37,7 @@ class _SignUpFormState extends State<SignUpForm> {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
-          .set({'username': username, 'email': email});
+          .set({'username': username, 'email': email, 'uid':uid});  
     } catch (err) {
       print(err);
     }
