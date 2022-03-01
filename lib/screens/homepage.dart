@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ieeespsu/screens/userprofile.dart';
@@ -11,6 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var _searchItem = '';
+  final imgList = [
+    Text("image 1"),
+    Text("image 2"),
+    Text("image 3"),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,62 +39,254 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.cyan,
         elevation: 0,
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
-        height: double.infinity,
-        width: double.infinity,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Colors.transparent,
-            ),
-            const Positioned(
-              top: -250,
-              child: CircleAvatar(
-                backgroundColor: Colors.cyan,
-                radius: 210,
+        // padding: EdgeInsets.all(10),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.transparent,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.transparent,
+                  ),
+                  const Positioned(
+                    top: -250,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.cyan,
+                      radius: 210,
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(80)),
+                    ),
+                    padding: EdgeInsets.all(10),
+                    height: 60,
+                    child: TextFormField(
+                      key: ValueKey('blog'),
+                      onSaved: (value) {
+                        _searchItem = value!;
+                      },
+                      decoration: const InputDecoration(
+                        suffixIcon: Icon(Icons.add_box, color: Colors.black),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.black),
+                        hintText: "Post your blog",
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 70,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(left: 40),
+                          child: Text(
+                            "Upcoming Events",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 200,
+                          width: 400,
+                          child: CarouselSlider(
+                              items: imgList
+                                  .map((item) => Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.grey,
+                                        ),
+                                        child: Center(
+                                          // child: Text("${item}",
+                                          // style: TextStyle(
+                                          //   color: Colors.white,
+                                          // ),
+                                          // ),
+                                          child: item,
+                                        ),
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: 35,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                "Faculty Member Blogs",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                width: 90,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Discover",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          height: 200,
+                          width: 400,
+                          child: CarouselSlider(
+                              items: imgList
+                                  .map((item) => Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.grey,
+                                        ),
+                                        child: Center(
+                                          // child: Text("${item}",
+                                          // style: TextStyle(
+                                          //   color: Colors.white,
+                                          // ),
+                                          // ),
+                                          child: item,
+                                        ),
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: 35,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                "Student Member Blogs",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              SizedBox(
+                                height: 30,
+                                width: 90,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Discover",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          height: 200,
+                          width: 400,
+                          child: CarouselSlider(
+                              items: imgList
+                                  .map((item) => Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.grey,
+                                        ),
+                                        child: Center(
+                                          // child: Text("${item}",
+                                          // style: TextStyle(
+                                          //   color: Colors.white,
+                                          // ),
+                                          // ),
+                                          child: item,
+                                        ),
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-            // Column(
-            //   children: [
-            //     // SizedBox(
-            //     //   height: 30,
-            //     // ),
-            //     Row(
-            //       children: const [
-            //         CircleAvatar(
-            //           radius: 24,
-            //           backgroundColor: Colors.black,
-            //           child: CircleAvatar(
-            //             radius: 23,
-            //             child: Icon(
-            //               Icons.person_add,
-            //               size: 30,
-            //             ),
-            //           ),
-            //         ),
-            //         SizedBox(
-            //           width: 10,
-            //         ),
-            //         Text(
-            //           "Hello there . . .",
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.bold,
-            //             fontSize: 20,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
-          ],
+            ],
+          ),
         ),
       ),
       endDrawer: Drawer(
@@ -322,7 +521,7 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text(
                       "www.spsu.ac.in",
                       style: TextStyle(color: Colors.black, fontSize: 10),
