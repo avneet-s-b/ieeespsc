@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:ieeespsu/screens/profile.dart';
 import 'package:ieeespsu/screens/userprofile.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +21,26 @@ class _HomePageState extends State<HomePage> {
     Text("image 2"),
     Text("image 3"),
   ];
+
+  //------fetch data method for username
+
+  var username = '';
+  _fetch() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if (firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        username = ds.data()!['username'];
+        print(username);
+      }).catchError((e) {
+        print(e);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -346,25 +369,59 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Hello avneet",
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700]),
-                          ),
-                          Text(
-                            "Student",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.grey[700]),
-                          ),
-                        ],
-                      ),
+                      FutureBuilder(
+                          future: _fetch(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState !=
+                                ConnectionState.done) {
+                              return Text(
+                                "Loading . . . ",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue[900]),
+                              );
+                            } else {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Hello $username",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[700]),
+                                  ),
+                                  Text(
+                                    "Student",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.grey[700]),
+                                  ),
+                                ],
+                              );
+                            }
+                          }),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     Text(
+                      //       "Hello avneet",
+                      //       style: TextStyle(
+                      //           fontSize: 22,
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.grey[700]),
+                      //     ),
+                      //     Text(
+                      //       "Student",
+                      //       style: TextStyle(
+                      //           fontSize: 16,
+                      //           fontWeight: FontWeight.normal,
+                      //           color: Colors.grey[700]),
+                      //     ),
+                      //   ],
+                      // ),
                       Spacer()
                     ],
                   )
@@ -430,7 +487,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ProfilePage()));
+                        },
                         child: const Text(
                           "Settings",
                           style: TextStyle(
@@ -462,6 +522,17 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      // TextButton(
+                      //   onPressed: () {},
+                      //   child: const Text(
+                      //     "Contact Us",
+                      //     style: TextStyle(
+                      //       color: Colors.black,
+                      //       fontSize: 18,
+                      //       fontWeight: FontWeight.normal,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
