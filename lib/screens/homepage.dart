@@ -386,7 +386,8 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Hello $username",
+                                    "$username",
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,

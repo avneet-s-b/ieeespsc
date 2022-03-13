@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ieeespsu/helper/sharedprefhelper.dart';
 import 'package:ieeespsu/screens/forgetpassword.dart';
 import 'package:ieeespsu/screens/signup.dart';
-
 
 class AuthForm extends StatefulWidget {
   const AuthForm({Key? key}) : super(key: key);
@@ -33,6 +33,12 @@ class _AuthFormState extends State<AuthForm> {
     try {
       authResult = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      if (authResult != null) {
+        SharedPreferenceHelper().saveUserEmail(authResult.user!.email!);
+        SharedPreferenceHelper().saveUserId(authResult.user!.uid);
+         SharedPreferenceHelper()
+          .saveUserName(authResult.user!.email!.replaceAll("@gmail.com", ""));
+      }
     } catch (err) {
       print(err);
     }

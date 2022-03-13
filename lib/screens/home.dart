@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ieeespsu/screens/chatmain.dart';
 import 'package:ieeespsu/screens/homepage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,9 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _currentindex = 0;
   final tabs = [
     HomePage(),
-    Center(
-      child: Text("Chat"),
-    ),
+    ChatMain(),
     Center(
       child: Text("FM"),
     ),
@@ -27,42 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: tabs[_currentindex],
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   currentIndex: _currentindex,
-      //   elevation: 10,
-      //   backgroundColor: Colors.grey[200],
-      //   unselectedItemColor: Colors.cyan,
-      //   selectedItemColor: Colors.cyan,
-      //   iconSize: 30,
-      //   onTap: (index) {
-      //     setState(() {
-      //       _currentindex = index;
-      //     });
-      //   },
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: "Home",
-      //       backgroundColor: Colors.cyan,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.mail),
-      //       label: "Chat",
-      //       backgroundColor: Colors.cyan,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.radio),
-      //       label: "FM",
-      //       backgroundColor: Colors.cyan,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: "Magazine",
-      //       backgroundColor: Colors.cyan,
-      //     ),
-      //   ],
-      // ),
       bottomNavigationBar: BottomAppBar(
         elevation: 100,
           child: Container(

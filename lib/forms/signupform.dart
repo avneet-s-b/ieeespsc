@@ -90,6 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                 ),
               ),
+              Text("Username is 'abc' for abc@gmail.com",style: TextStyle(color: Colors.grey,fontSize: 14)),
               SizedBox(
                 height: 10,
               ),
